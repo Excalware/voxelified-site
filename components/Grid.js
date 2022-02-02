@@ -16,7 +16,7 @@ const GridComponent = styled.div`
     justify-content: ${props => props.justifyContent || "flex-start"};
 `;
 
-class Grid extends React.Component {
+export default class Grid extends React.Component {
     render() {
         return (
             <GridComponent {...this.props}>
@@ -24,6 +24,4 @@ class Grid extends React.Component {
             </GridComponent>
         );
     }
-}
-
-export default Grid;
+};

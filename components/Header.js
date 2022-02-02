@@ -1,6 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
+
+import Grid from './Grid';
 import Typography from './Typography';
 
 const HeaderComponent = styled.header`
@@ -10,6 +12,7 @@ const HeaderComponent = styled.header`
     z-index: 1100;
     padding: 0 24px;
     position: fixed;
+    justify-content: space-between;
     background-color: #121212;
 
     display: flex;
@@ -27,15 +30,7 @@ const IconComponent = styled(Image)`
     vertical-align: middle;
 `;
 
-const TextComponent = styled.p`
-    color: white;
-    margin: 0 0 0 16px;
-    font-size: 1.5rem;
-    font-weight: 600;
-    line-height: 1.5;
-`;
-
-class Header extends React.Component {
+export default class Header extends React.Component {
     render() {
         return (
             <HeaderComponent>
@@ -57,9 +52,10 @@ class Header extends React.Component {
                         />
                     : this.props.text}
                 </BrandComponent>
+                <Grid>
+                    {this.props.children}
+                </Grid>
             </HeaderComponent>
         );
     }
-}
-
-export default Header;
+};

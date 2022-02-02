@@ -27,7 +27,7 @@ const MainComponent = styled.a`
     }
 `;
 
-class NavigationLink extends React.Component {
+export default withRouter(class NavigationLink extends React.Component {
     render() {
         const LinkIcon = this.props.icon && Icon[this.props.icon];
         return (
@@ -39,6 +39,4 @@ class NavigationLink extends React.Component {
             </MainComponent>
         );
     }
-};
-
-export default withRouter(NavigationLink);
+});

@@ -27,12 +27,6 @@ body {
     background-color: #1D1D1D;
 }
 
-@media print {
-    body {
-        background-color: #fff;
-    }
-}
-
 body::backdrop {
     background-color: #1D1D1D;
 }

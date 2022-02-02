@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { withRouter } from 'next/router';
 import styled from 'styled-components';
 
@@ -6,16 +6,10 @@ import App from '../components/App';
 import Main from '../components/Main';
 import Grid from '../components/Grid';
 import Header from '../components/Header';
-import Button from '../components/Button';
-import Spinner from '../components/Spinner';
 import Typography from '../components/Typography';
 import Navigation from '../components/Navigation';
 
-import { supabase, supautil } from '../lib/supabase/client';
-
-const RedirectGrid = styled(Grid)`
-
-`;
+import { supabase } from '../lib/supabase/client';
 
 const BetaText = styled(Typography)`
     color: #ffffffad;
@@ -40,7 +34,7 @@ export default withRouter(class ContainerPage extends React.Component {
         const split = this.props.router.asPath.split("/");
         const url = split.splice(0, split.indexOf("containers") + 2).join("/");
         return (
-            <App>
+            <App title="Voxel Containers">
                 <Header
                     text={
                         <Grid margin="0 0 0 16px" alignItems="center">
@@ -60,6 +54,8 @@ export default withRouter(class ContainerPage extends React.Component {
                         ["Members", `${url}/members`],
                         ["Bindings", `${url}/bindings`]
                     ]]
+                ]} buttons={[
+                    ["Back to Verification", "/my/verification"]
                 ]}/>
                 <Main>
                     {this.state.renderClient ?

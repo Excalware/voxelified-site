@@ -11,9 +11,9 @@ const SpinnerAnimation = keyframes`
 `;
 const SpinnerComponent = styled.div`
     color: #fff;
-    width: ${props => props.size || 48}px;
-    height: ${props => props.size || 48}px;
-    border: calc(${props => props.size || 48}px / 9) solid;
+    width: ${props => props.size ?? 48}px;
+    height: ${props => props.size ?? 48}px;
+    border: calc(${props => props.size ?? 48}px / 9) solid;
     display: ${props => (props.visible == null ? true : props.visible) ? "inline-block" : "none"};
     border-radius: 50%;
     border-top-color: transparent;
@@ -21,12 +21,10 @@ const SpinnerComponent = styled.div`
     animation: ${SpinnerAnimation} 1s linear infinite;
 `;
 
-class Spinner extends React.Component {
+export default class Spinner extends React.Component {
     render() {
         return (
             <SpinnerComponent {...this.props}/>
         );
     }
-}
-
-export default Spinner;
+};

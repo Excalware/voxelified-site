@@ -22,12 +22,14 @@ export default class Card extends React.Component {
                 {...this.props}
             >
                 <TitleGrid padding="16px 24px" alignItems="center" justifyContent="space-between">
-                    <Typography
-                        text={this.props.title || "Card Title"}
-                        size="1.2rem"
-                        color="white"
-                        weight={600}
-                    />
+                    {this.props.title == "string" ?
+                        <Typography
+                            text={this.props.title ?? "Card Title"}
+                            size="1.2rem"
+                            color="white"
+                            weight={600}
+                        />
+                    : this.props.title}
                     <Grid spacing="8px" alignItems="center">
                         {this.props.buttons}
                     </Grid>

@@ -10,7 +10,7 @@ const TextComponent = styled.p`
     white-space: pre-line;
 `;
 
-class Typography extends React.Component {
+export default class Typography extends React.Component {
     render() {
         return (
             <TextComponent {...this.props}>
@@ -18,6 +18,4 @@ class Typography extends React.Component {
             </TextComponent>
         );
     }
-}
-
-export default Typography;
+};

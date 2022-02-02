@@ -1,6 +1,5 @@
 import ky from 'ky';
-import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import React from 'react';
 import styled from 'styled-components';
 import { PersonPlus, ClipboardPlus } from 'react-bootstrap-icons';
 
@@ -9,24 +8,16 @@ import Main from '../../components/Main';
 import Card from '../../components/Card';
 import Grid from '../../components/Grid';
 import Image from '../../components/Image';
-import Input from '../../components/Input';
 import Table from '../../components/Table';
 import Alert from '../../components/Alert';
 import Header from '../../components/Header';
-import Button from '../../components/Button';
-import Spinner from '../../components/Spinner';
+import Button from '../../components/Experimental/Button';
 import Stepper from '../../components/Stepper';
 import ExpInput from '../../components/Input/ExpInput';
 import Typography from '../../components/Typography';
-import Navigation from '../../components/Navigation';
 import InputLabel from '../../components/Input/Label';
-import InputButton from '../../components/Input/Button';
 
-import { supabase, supautil } from '../../lib/supabase/client';
-
-const RedirectGrid = styled(Grid)`
-
-`;
+import { supabase } from '../../lib/supabase/client';
 
 const Method = styled(Grid)`
     width: 18rem;
@@ -117,13 +108,13 @@ export default class VerificationConnect extends React.Component {
                                                 })}
                                             />
                                             <Button
-                                                mw={236}
-                                                text="Search"
-                                                size="small"
+                                                width="236px"
                                                 margin="8px 0"
                                                 onClick={this.search.bind(this)}
                                                 disabled={this.state.searching}
-                                            />
+                                            >
+                                                Search
+                                            </Button>
                                             {this.state.error &&
                                                 <Alert title="Unknown Error" body={this.state.error} margin="16px 0" severity="error"/>
                                             }
@@ -158,7 +149,9 @@ export default class VerificationConnect extends React.Component {
                                                         this.state.accounts.map((user, index) =>
                                                             <tr key={index}>
                                                                 <td>
-                                                                    <TableButton text={<PersonPlus size={24}/>} onClick={() => this.selectAccount(user)}/>
+                                                                    <TableButton onClick={() => this.selectAccount(user)}>
+                                                                        <PersonPlus size={24}/>
+                                                                    </TableButton>
                                                                 </td>
                                                                 <td>
                                                                     <Grid spacing="12px" alignItems="center">
@@ -186,21 +179,27 @@ export default class VerificationConnect extends React.Component {
                                             <div/>
                                             <Grid width="100%" margin="0 0 10px 0" padding="0 16px" alignItems="center" justifyContent="space-between">
                                                 <Typography text="Profile Code"/>
-                                                <Button text="Proceed" size="small" onClick={() => this.method(0)} disabled={this.state.gettingCode}/>
+                                                <Button onClick={() => this.method(0)} disabled={this.state.gettingCode}>
+                                                    Proceed
+                                                </Button>
                                             </Grid>
                                         </Method>
                                         <Method img="/voxel.png" alt="Method 1 Image" direction="vertical" alignItems="center" justifyContent="space-between">
                                             <div/>
                                             <Grid width="100%" margin="0 0 10px 0" padding="0 16px" alignItems="center" justifyContent="space-between">
                                                 <Typography text="In-Experience"/>
-                                                <Button text="Proceed" size="small" onClick={() => this.method(1)} disabled/>
+                                                <Button onClick={() => this.method(1)} disabled>
+                                                    Proceed
+                                                </Button>
                                             </Grid>
                                         </Method>
                                         <Method img="/voxel.png" alt="Method 2 Image" direction="vertical" alignItems="center" justifyContent="space-between">
                                             <div/>
                                             <Grid width="100%" margin="0 0 10px 0" padding="0 16px" alignItems="center" justifyContent="space-between">
                                                 <Typography text="Roblox OAuth"/>
-                                                <Button text="Proceed" size="small" onClick={() => this.method(2)} disabled/>
+                                                <Button onClick={() => this.method(2)} disabled>
+                                                    Proceed
+                                                </Button>
                                             </Grid>
                                         </Method>
                                         {this.state.error &&
@@ -218,12 +217,14 @@ export default class VerificationConnect extends React.Component {
                                             value={this.state.verifyCode}
                                             readOnly
                                         >
-                                            <InputButton onClick={_ => navigator.clipboard.writeText(document.getElementById("verifyCode").value)}>
+                                            <Button theme="secondary" onClick={_ => navigator.clipboard.writeText(document.getElementById("verifyCode").value)}>
                                                 <ClipboardPlus/>
                                                 Copy
-                                            </InputButton>
+                                            </Button>
                                         </ExpInput>
-                                        <Button text="Confirm Code" size="small" width={300} theme="tertiary" margin="16px 0 0 0" onClick={this.confirm.bind(this)} disabled={this.state.confirming}/>
+                                        <Button width="300px" margin="16px 0 0 0" onClick={this.confirm.bind(this)} disabled={this.state.confirming}>
+                                            Confirm Code
+                                        </Button>
                                         {this.state.error &&
                                             <Alert title="Unknown Error" body={this.state.error} margin="16px 0" severity="error"/>
                                         }
@@ -242,8 +243,9 @@ export default class VerificationConnect extends React.Component {
                                 ["Connected",
                                     <Grid key={0} padding="24px 0" direction="vertical">
                                         <Typography text="🥳 You have connected your account! 🥳" size="2rem" weight={600} margin="0 0 16px 0"/>
-                                        <InputLabel text="Overview coming soon!"/>
-                                        <Button text="Back to Account" size="small" onClick={() => location.replace("/my/verification")}/>
+                                        <Button href="/my/verification">
+                                            Back to Verification
+                                        </Button>
                                     </Grid>
                                 ]
                             ]}/>

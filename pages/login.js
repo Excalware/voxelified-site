@@ -22,7 +22,7 @@ const RedirectGrid = styled(Grid)`
 
 `;
 
-class LoginPage extends React.Component {
+export default withRouter(class LoginPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -36,7 +36,7 @@ class LoginPage extends React.Component {
 
     render() {
         return (
-            <App>
+            <App title="Voxel Account">
                 <Header text="voxel" icon={"/favicon.ico"}/>
                 <Main>
                     {this.state.redirecting ?
@@ -152,6 +152,4 @@ class LoginPage extends React.Component {
             magicSent: true
         });
     }
-};
-
-export default withRouter(LoginPage);
+});

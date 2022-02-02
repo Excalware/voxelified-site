@@ -1,21 +1,13 @@
-import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import styled from 'styled-components';
+import React from 'react';
 
 import App from '../components/App';
 import Main from '../components/Main';
 import Grid from '../components/Grid';
 import Header from '../components/Header';
-import Button from '../components/Button';
-import Spinner from '../components/Spinner';
 import Typography from '../components/Typography';
 import Navigation from '../components/Navigation';
 
 import { supabase, supautil } from '../lib/supabase/client';
-
-const RedirectGrid = styled(Grid)`
-
-`;
 
 export default class ContainerPage extends React.Component {
     constructor(props) {
@@ -27,7 +19,7 @@ export default class ContainerPage extends React.Component {
 
     render() {
         return (
-            <App>
+            <App title="Voxel Account">
                 <Header
                     text="voxel account"
                     icon={"/favicon.ico"}

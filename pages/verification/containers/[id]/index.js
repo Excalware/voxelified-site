@@ -1,36 +1,13 @@
 import React from 'react';
 import { withRouter } from 'next/router';
-import styled from 'styled-components';
 
 import Grid from '../../../../components/Grid';
 import Card from '../../../../components/Card';
-import Table from '../../../../components/Table';
-import Button from '../../../../components/Experimental/Button';
-import Spinner from '../../../../components/Spinner';
 import ExpInput from '../../../../components/Input/ExpInput';
-import Typography from '../../../../components/Typography';
 import InputLabel from '../../../../components/Input/Label';
 import ContainerPage from '../../../../components/ContainerPage';
 
-import { supabase, supautil } from '../../../../lib/supabase/client';
-
-const Container = styled.a`
-    gap: 2px;
-    width: fit-content;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    display: flex;
-    padding: 16px 24px;
-    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    border-radius: 8px;
-    flex-direction: column;
-    text-decoration: none;
-    background-color: #222222;
-
-    &:hover {
-        cursor: pointer;
-        background-color: #2c2c2c;
-    }
-`;
+import { supabase } from '../../../../lib/supabase/client';
 
 export default withRouter(class Container extends React.Component {
     constructor(props) {

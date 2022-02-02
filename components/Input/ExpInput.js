@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Grid from '../Grid';
 
 const ExpComponent = styled.div`
-    width: ${props => props.width ?? "unset"};
+    width: ${props => props._width ?? "unset"};
     position: relative;
 `;
 
@@ -46,8 +46,8 @@ const ExpButtonsComponent = styled(Grid)`
 export default class ExpInput extends React.Component {
     render() {
         return (
-            <ExpComponent width={this.props.width}>
-                <ExpInputComponent {...this.props}/>
+            <ExpComponent _width={this.props.width}>
+                <ExpInputComponent id={this.props.id} value={this.props.value} readOnly={this.props.readOnly} onChange={this.props.onChange} disabled={this.props.disabled}/>
                 <ExpButtonsComponent>
                     {this.props.children}
                 </ExpButtonsComponent>

@@ -1,12 +1,17 @@
 import App from '../components/App';
 import Main from '../components/Main';
+import Link from '../components/Link';
 import Header from '../components/Header';
 import Typography from '../components/Typography';
 
 export default function Home() {
     return (
-        <App>
-            <Header text="voxel" icon={"/favicon.ico"}/>
+        <App title="Voxel Home">
+            <Header text="voxel" icon={"/favicon.ico"}>
+                <Link href="/login" color="#ffffffb8" weight={400} hoverColor="white">
+                    Login
+                </Link>
+            </Header>
             <Main>
                 <Typography
                     text="hello, next.js page!"

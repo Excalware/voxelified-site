@@ -3,14 +3,11 @@ import styled from 'styled-components';
 import { Box, PersonBadge, ArrowClockwise } from 'react-bootstrap-icons';
 
 import Grid from '../../../../components/Grid';
-import Card from '../../../../components/Card';
-import Table from '../../../../components/Table';
 import Button from '../../../../components/Experimental/Button';
-import Spinner from '../../../../components/Spinner';
 import Typography from '../../../../components/Typography';
 import AccountPage from '../../../../components/AccountPage';
 
-import { supabase, supautil } from '../../../../lib/supabase/client';
+import { supabase } from '../../../../lib/supabase/client';
 
 const Container = styled.a`
     gap: 2px;

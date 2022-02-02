@@ -1,32 +1,24 @@
 import ky from 'ky';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { withRouter } from 'next/router';
 import styled from 'styled-components';
-import { CheckCircle, ClipboardPlus } from 'react-bootstrap-icons';
+import { CheckCircle } from 'react-bootstrap-icons';
 
 import App from '../../../../../components/App';
 import Main from '../../../../../components/Main';
 import Card from '../../../../../components/Card';
 import Grid from '../../../../../components/Grid';
 import Image from '../../../../../components/Image';
-import Input from '../../../../../components/Input';
 import Table from '../../../../../components/Table';
 import Alert from '../../../../../components/Alert';
 import Header from '../../../../../components/Header';
 import Button from '../../../../../components/Experimental/Button';
-import Spinner from '../../../../../components/Spinner';
 import Stepper from '../../../../../components/Stepper';
 import ExpInput from '../../../../../components/Input/ExpInput';
 import Typography from '../../../../../components/Typography';
-import Navigation from '../../../../../components/Navigation';
 import InputLabel from '../../../../../components/Input/Label';
-import InputButton from '../../../../../components/Input/Button';
 
-import { supabase, supautil } from '../../../../../lib/supabase/client';
-
-const RedirectGrid = styled(Grid)`
-
-`;
+import { supabase } from '../../../../../lib/supabase/client';
 
 const Method = styled(Grid)`
     width: 18rem;

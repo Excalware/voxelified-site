@@ -1,9 +1,9 @@
 {
     "name": "voxel-site",
     "version": "1.0.0",
-    "main": "index.cjs",
+    "homepage": "https://www.voxelified.com",
     "repository": "https://github.com/Excalware/voxel-site.git",
-    "author": "Excalware, Blookers",
+    "author": "Excalware",
     "license": "MIT",
     "dependencies": {
         "@supabase/supabase-js": "^1.29.3",

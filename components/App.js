@@ -8,12 +8,12 @@ const AppComponent = styled.div`
     flex-direction: row;
 `;
 
-class App extends React.Component {
+export default class App extends React.Component {
     render() {
         return (
             <AppComponent>
                 <Head>
-                    <title>Voxel Automation Bot</title>
+                    <title>{this.props.title ?? "Voxel"}</title>
                     <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
                     <meta property="og:title" content="Voxel"/>
                     <meta name="description" content="Free Web tutorials"/>
@@ -30,6 +30,4 @@ class App extends React.Component {
             </AppComponent>
         );
     }
-}
-
-export default App;
+};

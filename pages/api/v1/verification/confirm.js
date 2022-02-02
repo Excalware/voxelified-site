@@ -1,6 +1,6 @@
 import ky from 'ky';
 import * as uuid from 'uuid';
-import { supabase, supautil } from '../../../../lib/supabase/client';
+import { supabase } from '../../../../lib/supabase/client';
 export default async function handler(request, response) {
     if(request.method !== "POST")
         return response.status(405).json({
@@ -24,7 +24,7 @@ export default async function handler(request, response) {
         });
 
     const { code, method } = request.body;
-    if(typeof code != "string")
+    if(typeof code != "string" || !uuid.validate(code))
         return response.status(400).json({
             state: 'invalid_code',
             message: 'body.code is invalid.',

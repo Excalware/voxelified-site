@@ -144,7 +144,7 @@ const ButtonComponent = styled.button`
     }
 `;
 
-class Button extends React.Component {
+export default class Button extends React.Component {
     render() {
         return (
             <ButtonComponent {...this.props} size={this.props.size || "medium"} theme={this.props.theme || "primary"}>
@@ -154,6 +154,3 @@ class Button extends React.Component {
         );
     }
 }
-//<IconComponent className={this.props.icon} theme={this.props.theme || "primary"}/>
-
-export default Button;

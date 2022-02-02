@@ -101,4 +101,4 @@ export default class Stepper extends React.Component {
             </Grid>
         );
     }
-}
+};

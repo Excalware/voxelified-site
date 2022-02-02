@@ -8,12 +8,12 @@ const MainComponent = styled.main`
     max-width: 100%;
     max-height: calc(100vh - 64px);
     margin-top: 64px;
-    overflow-y: scroll;
+    overflow-y: auto;
     flex-direction: column;
     background-color: #1D1D1D;
 `;
 
-class Main extends React.Component {
+export default class Main extends React.Component {
     render() {
         return (
             <MainComponent>
@@ -21,6 +21,4 @@ class Main extends React.Component {
             </MainComponent>
         );
     }
-}
-
-export default Main;
+};

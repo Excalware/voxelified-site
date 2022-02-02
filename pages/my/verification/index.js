@@ -1,16 +1,13 @@
 import ky from 'ky';
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
+import React from 'react';
 
 import Grid from '../../../components/Grid';
 import Card from '../../../components/Card';
 import Table from '../../../components/Table';
-import Button from '../../../components/Button';
-import Spinner from '../../../components/Spinner';
 import Typography from '../../../components/Typography';
 import AccountPage from '../../../components/AccountPage';
 
-import { supabase, supautil } from '../../../lib/supabase/client';
+import { supabase } from '../../../lib/supabase/client';
 
 export default class Verification extends React.Component {
     constructor(props) {

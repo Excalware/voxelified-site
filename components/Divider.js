@@ -1,7 +1,5 @@
-import Grid from './Grid';
 import React from 'react';
 import styled from 'styled-components';
-import Typography from './Typography';
 
 const MainComponent = styled.div`
     width: ${props => props.width ?? "2px"};

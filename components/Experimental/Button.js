@@ -59,6 +59,32 @@ const Themes = {
             active: 1,
             disabled: 0.5
         }
+    },
+    tertiary: {
+        color: {
+            hover: "transparent",
+            normal: "transparent",
+            active: "transparent",
+            disabled: "transparent"
+        },
+        border: {
+            hover: "1px solid #e0e0e00d",
+            normal: "1px solid #2a2a2a",
+            active: "1px solid #2a2a2a",
+            disabled: "1px solid #2a2a2a"
+        },
+        textColor: {
+            hover: "#FFFFFF",
+            normal: "#FFFFFF",
+            active: "#FFFFFF",
+            disabled: "#cfcfcf"
+        },
+        opacity: {
+            hover: 1,
+            normal: 1,
+            active: 1,
+            disabled: 0.5
+        }
     }
 };
 const ButtonComponent = styled.a`

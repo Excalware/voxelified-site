@@ -1,14 +1,10 @@
-import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import styled from 'styled-components';
+import React from 'react';
 
 import Grid from '../../../components/Grid';
 import Card from '../../../components/Card';
 import Table from '../../../components/Table';
-import Button from '../../../components/Button';
 import ExpInput from '../../../components/Input/ExpInput';
 import InputLabel from '../../../components/Input/Label';
-import Typography from '../../../components/Typography';
 import AccountPage from '../../../components/AccountPage';
 
 import { supabase, supautil } from '../../../lib/supabase/client';

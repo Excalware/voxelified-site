@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Grid from '../Grid';
-import Typography from '../Typography';
 import NavigationLink from './Link';
 import NavigationCategory from './Category';
 
@@ -16,14 +15,23 @@ const MainComponent = styled(Grid)`
 export default class Navigation extends React.Component {
     render() {
         return (
-            <MainComponent direction="vertical">
-                {this.props.data.map((category, index) =>
-                    <NavigationCategory key={index} name={category[0]}>
-                        {category[1].map((link, index) =>
+            <MainComponent direction="vertical" justifyContent="space-between">
+                <Grid direction="vertical">
+                    {this.props.data.map((category, index) =>
+                        <NavigationCategory key={index} name={category[0]}>
+                            {category[1].map((link, index) =>
+                                <NavigationLink key={index} name={link[0]} link={link[1]} icon={link[2]}/>
+                            )}
+                        </NavigationCategory>
+                    )}
+                </Grid>
+                {this.props.buttons &&
+                    <NavigationCategory name="">
+                        {this.props.buttons.map((link, index) =>
                             <NavigationLink key={index} name={link[0]} link={link[1]} icon={link[2]}/>
                         )}
                     </NavigationCategory>
-                )}
+                }
             </MainComponent>
         );
     }

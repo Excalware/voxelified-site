@@ -1,6 +1,5 @@
 import React from 'react';
 import { withRouter } from 'next/router';
-import styled from 'styled-components';
 
 import Grid from '../../../../components/Grid';
 import Card from '../../../../components/Card';
@@ -13,31 +12,14 @@ import Typography from '../../../../components/Typography';
 import InputLabel from '../../../../components/Input/Label';
 import ContainerPage from '../../../../components/ContainerPage';
 
-import { supabase, supautil } from '../../../../lib/supabase/client';
-
-const Container = styled.a`
-    gap: 2px;
-    width: fit-content;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    display: flex;
-    padding: 16px 24px;
-    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    border-radius: 8px;
-    flex-direction: column;
-    text-decoration: none;
-    background-color: #222222;
-
-    &:hover {
-        cursor: pointer;
-        background-color: #2c2c2c;
-    }
-`;
+import { supabase } from '../../../../lib/supabase/client';
 
 export default withRouter(class ContainerMembers extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             members: [],
+            loading: true,
             addingMember: false
         };
     }
@@ -67,7 +49,17 @@ export default withRouter(class ContainerMembers extends React.Component {
                         </Grid>
                     </Grid>
                 </Card>
-                <Card title="Container Members" padding={0}>
+                <Card title={
+                    <Grid spacing="12px" alignItems="center">
+                        <Typography
+                            text="Container Members"
+                            size="1.2rem"
+                            color="white"
+                            weight={600}
+                        />
+                        {this.state.loading && <Spinner size={24}/>}
+                    </Grid>
+                } padding={0}>
                     <Table>
                         <thead>
                             <tr>
@@ -78,7 +70,7 @@ export default withRouter(class ContainerMembers extends React.Component {
                                     Account Name
                                 </th>
                                 <th>
-                                    Rank
+                                    Role
                                 </th>
                             </tr>
                         </thead>
@@ -168,6 +160,7 @@ export default withRouter(class ContainerMembers extends React.Component {
 
             this.setState({
                 members,
+                loading: false,
                 container
             });
         }, 1000);
