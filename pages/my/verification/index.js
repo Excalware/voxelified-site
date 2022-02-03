@@ -106,3 +106,4 @@ export default class Verification extends React.Component {
         })
     }
 };
+export { getServerSideProps } from '../../../lib/auth';

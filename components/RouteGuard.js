@@ -1,30 +1,29 @@
+import ky from 'ky';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import styled from 'styled-components';
-
-import Grid from './Grid';
-import Spinner from './Spinner';
 
 import { supabase } from '../lib/supabase/client';
 
-const SpinnerContainer = styled(Grid)`
-    width: 100vw;
-    height: 100vh;
-    align-items: center;
-    justify-content: center;
-`;
+function checkSession(router, session) {
+    if(!session)
+        router.push('/login');
+}
 
 export default function RouteGuard({ children }) {
     const router = useRouter();
-    const session = supabase.auth.session();
     useEffect(() => {
-        if (!session) {
-            router.push('/login');
-        }
+        checkSession(router, supabase.auth.session())
+        supabase.auth.onAuthStateChange(async (event, session) => {
+            await ky.post('/api/v1/auth/authenticate', {
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                json: { event, session }
+            });
+            checkSession(router, session)
+        });
     });
-    if(!session)
-        return <SpinnerContainer>
-            <Spinner/>
-        </SpinnerContainer>;
+    
     return children;
 };

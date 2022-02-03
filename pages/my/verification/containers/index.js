@@ -96,3 +96,4 @@ export default class VerificationContainers extends React.Component {
         });
     }
 };
+export { getServerSideProps } from '../../../../lib/auth';

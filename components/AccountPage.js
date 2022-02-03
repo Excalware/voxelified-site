@@ -12,9 +12,6 @@ import { supautil } from '../lib/supabase/client';
 export default class ContainerPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            renderClient: false
-        };
     }
 
     render() {

@@ -74,3 +74,4 @@ export default withRouter(class Container extends React.Component {
         }, 1000);
     }
 });
+export { getServerSideProps } from '../../../../lib/auth';

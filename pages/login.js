@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import ky from 'ky';
+import React from 'react';
 import { withRouter } from 'next/router';
 import styled from 'styled-components';
 
@@ -8,7 +9,6 @@ import Grid from '../components/Grid';
 import Alert from '../components/Alert';
 import Input from '../components/Input';
 import Header from '../components/Header';
-import Button from '../components/Button';
 import Spinner from '../components/Spinner';
 import Divider from '../components/Divider';
 import Typography from '../components/Typography';
@@ -90,15 +90,21 @@ export default withRouter(class LoginPage extends React.Component {
         );
     }
 
+    sendAuth(event, session) {
+        ky.post('/api/v1/auth/authenticate', {
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            json: { event, session }
+        }).then(() => this.redirect());
+    }
+
     componentDidMount() {
         const session = supabase.auth.session();
         if(session)
-            this.redirect();
-
-        supabase.auth.onAuthStateChange((event, session) => {
-            if(event == 'SIGNED_IN')
-                this.redirect();
-        });
+            this.sendAuth('SIGNED_IN', session);
+        supabase.auth.onAuthStateChange(this.sendAuth.bind(this));
 
         if(location) {
             const search = new URLSearchParams(location.search);

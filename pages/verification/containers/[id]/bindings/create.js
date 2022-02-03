@@ -351,3 +351,4 @@ export default withRouter(class ContainerBindingCreator extends React.Component 
         });
     }
 });
+export { getServerSideProps } from '../../../../../lib/auth';

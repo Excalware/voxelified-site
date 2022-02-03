@@ -143,3 +143,4 @@ export default class Account extends React.Component {
         });
     }
 };
+export { getServerSideProps } from '../../../lib/auth';

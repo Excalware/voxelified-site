@@ -354,3 +354,4 @@ export default class VerificationConnect extends React.Component {
         });
     }
 };
+export { getServerSideProps } from '../../lib/auth';
