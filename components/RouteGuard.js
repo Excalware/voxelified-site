@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
 import Grid from './Grid';
-import Spinner from './spinner';
+import Spinner from './Spinner';
 
 import { supabase } from '../lib/supabase/client';
 
