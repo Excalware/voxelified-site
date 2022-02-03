@@ -8,8 +8,7 @@ import Grid from '../components/Grid';
 import Header from '../components/Header';
 import Typography from '../components/Typography';
 import Navigation from '../components/Navigation';
-
-import { supabase } from '../lib/supabase/client';
+import RouteGuard from '../components/RouteGuard';
 
 const BetaText = styled(Typography)`
     color: #ffffffad;
@@ -26,7 +25,7 @@ export default withRouter(class ContainerPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            renderClient: false
+            
         };
     }
 
@@ -35,59 +34,36 @@ export default withRouter(class ContainerPage extends React.Component {
         const url = split.splice(0, split.indexOf("containers") + 2).join("/");
         return (
             <App title="Voxel Containers">
-                <Header
-                    text={
-                        <Grid margin="0 0 0 16px" alignItems="center">
-                            <Typography
-                                text="voxel containers"
-                                size="1.5rem"
-                                weight={600}
-                            />
-                            <BetaText text="beta"/>
-                        </Grid>
-                    }
-                    icon={"/favicon.ico"}
-                />
-                <Navigation data={[
-                    ["Container", [
-                        ["Details", `${url}`],
-                        ["Members", `${url}/members`],
-                        ["Bindings", `${url}/bindings`]
-                    ]]
-                ]} buttons={[
-                    ["Back to Verification", "/my/verification"]
-                ]}/>
-                <Main>
-                    {this.state.renderClient ?
+                <RouteGuard>
+                    <Header
+                        text={
+                            <Grid margin="0 0 0 16px" alignItems="center">
+                                <Typography
+                                    text="voxel containers"
+                                    size="1.5rem"
+                                    weight={600}
+                                />
+                                <BetaText text="beta"/>
+                            </Grid>
+                        }
+                        icon={"/favicon.ico"}
+                    />
+                    <Navigation data={[
+                        ["Container", [
+                            ["Details", `${url}`],
+                            ["Members", `${url}/members`],
+                            ["Bindings", `${url}/bindings`]
+                        ]]
+                    ]} buttons={[
+                        ["Back to Verification", "/my/verification"]
+                    ]}/>
+                    <Main>
                         <Grid spacing="24px" direction="vertical">
                             {this.props.children}
                         </Grid>
-                    :
-                        <Grid width="100%" direction="vertical" alignItems="center">
-                            <Typography text="You're being redirected" size="3rem" weight={700}/>
-                        </Grid>
-                    }
-                </Main>
+                    </Main>
+                </RouteGuard>
             </App>
         );
-    }
-
-    componentDidMount() {
-        const session = supabase.auth.session();
-        if(!session)
-            location.href = '/login';
-        else
-            this.setState({
-                renderClient: true
-            });
-
-        supabase.auth.onAuthStateChange((event, session) => {
-            if(event == 'SIGNED_OUT') {
-                location.href = '/';
-                this.setState({
-                    renderClient: false
-                });
-            }
-        });
     }
 });

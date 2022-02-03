@@ -16,6 +16,7 @@ import Button from '../../../../../components/Experimental/Button';
 import Stepper from '../../../../../components/Stepper';
 import ExpInput from '../../../../../components/Input/ExpInput';
 import Typography from '../../../../../components/Typography';
+import RouteGuard from '../../../../../components/RouteGuard';
 import InputLabel from '../../../../../components/Input/Label';
 
 import { supabase } from '../../../../../lib/supabase/client';
@@ -74,8 +75,7 @@ export default withRouter(class ContainerBindingCreator extends React.Component 
             type: -1,
             roles: [],
             error: null,
-            groups: [],
-            renderClient: false
+            groups: []
         };
     }
 
@@ -84,12 +84,12 @@ export default withRouter(class ContainerBindingCreator extends React.Component 
         const url = split.splice(0, split.indexOf("containers") + 2).join("/");
         return (
             <App>
-                <Header
-                    text="voxel"
-                    icon={"/favicon.ico"}
-                />
-                <Main>
-                    {this.state.renderClient ?
+                <RouteGuard>
+                    <Header
+                        text="voxel"
+                        icon={"/favicon.ico"}
+                    />
+                    <Main>
                         <Grid spacing="24px" direction="vertical">
                             <Stepper step={this.state.step} steps={[
                                 ["Choose Type", 
@@ -266,12 +266,8 @@ export default withRouter(class ContainerBindingCreator extends React.Component 
                                 ]
                             ]}/>
                         </Grid>
-                    :
-                        <Grid width="100%" direction="vertical" alignItems="center">
-                            <Typography text="You're being redirected" size="3rem" weight={700}/>
-                        </Grid>
-                    }
-                </Main>
+                    </Main>
+                </RouteGuard>
             </App>
         );
     }
@@ -352,32 +348,6 @@ export default withRouter(class ContainerBindingCreator extends React.Component 
             roles: data.data,
             error: null,
             searching: false
-        });
-    }
-
-    componentDidMount() {
-        const session = supabase.auth.session();
-        if(!session)
-            location.href = '/login';
-        else
-        this.setSession(session);
-
-        supabase.auth.onAuthStateChange((event, session) => {
-            if(event == "SIGNED_IN")
-                this.setSession(session);
-            else if(event == 'SIGNED_OUT') {
-                location.href = '/';
-                this.setState({
-                    renderClient: false
-                });
-            }
-        });
-    }
-
-    setSession(session) {
-        this.setState({
-            session,
-            renderClient: true
         });
     }
 });

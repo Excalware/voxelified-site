@@ -15,6 +15,7 @@ import Button from '../../components/Experimental/Button';
 import Stepper from '../../components/Stepper';
 import ExpInput from '../../components/Input/ExpInput';
 import Typography from '../../components/Typography';
+import RouteGuard from '../../components/RouteGuard';
 import InputLabel from '../../components/Input/Label';
 
 import { supabase } from '../../lib/supabase/client';
@@ -79,20 +80,19 @@ export default class VerificationConnect extends React.Component {
             nameUserId: "",
             confirming: false,
             verifyCode: "Placeholder",
-            gettingCode: false,
-            renderClient: false
+            gettingCode: false
         };
     }
 
     render() {
         return (
             <App>
-                <Header
-                    text="voxel"
-                    icon={"/favicon.ico"}
-                />
-                <Main>
-                    {this.state.renderClient ?
+                <RouteGuard>
+                    <Header
+                        text="voxel"
+                        icon={"/favicon.ico"}
+                    />
+                    <Main>
                         <Grid spacing="24px" direction="vertical">
                             <Stepper step={this.state.step} steps={[
                                 ["Choose Account",
@@ -250,12 +250,8 @@ export default class VerificationConnect extends React.Component {
                                 ]
                             ]}/>
                         </Grid>
-                    :
-                        <Grid width="100%" direction="vertical" alignItems="center">
-                            <Typography text="You're being redirected" size="3rem" weight={700}/>
-                        </Grid>
-                    }
-                </Main>
+                    </Main>
+                </RouteGuard>
             </App>
         );
     }
@@ -284,12 +280,13 @@ export default class VerificationConnect extends React.Component {
         this.setState({
             gettingCode: true
         });
+        const session = supabase.auth.session();
         const { code, error, message } = await ky.post('/api/v1/verification/connect', {
             json: {
                 userId: this.state.account.id
             },
             headers: {
-                authorization: this.state.session.access_token
+                authorization: session.access_token
             },
             throwHttpErrors: false
         }).json();
@@ -311,13 +308,14 @@ export default class VerificationConnect extends React.Component {
         this.setState({
             confirming: true
         });
+        const session = supabase.auth.session();
         const data = await ky.post('/api/v1/verification/confirm', {
             json: {
                 code: this.state.verifyCode,
                 method: this.state.method
             },
             headers: {
-                authorization: this.state.session.access_token
+                authorization: session.access_token
             },
             throwHttpErrors: false
         }).json();
@@ -353,32 +351,6 @@ export default class VerificationConnect extends React.Component {
         this.setState({
             step: 1,
             account: user
-        });
-    }
-
-    componentDidMount() {
-        const session = supabase.auth.session();
-        if(!session)
-            location.href = '/login';
-        else
-        this.setSession(session);
-
-        supabase.auth.onAuthStateChange((event, session) => {
-            if(event == "SIGNED_IN")
-                this.setSession(session);
-            else if(event == 'SIGNED_OUT') {
-                location.href = '/';
-                this.setState({
-                    renderClient: false
-                });
-            }
-        });
-    }
-
-    setSession(session) {
-        this.setState({
-            session,
-            renderClient: true
         });
     }
 };
