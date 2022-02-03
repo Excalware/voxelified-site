@@ -16,9 +16,9 @@ export default class App extends React.Component {
                     <title>{this.props.title ?? "Voxel"}</title>
                     <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
                     <meta property="og:title" content="Voxel"/>
-                    <meta name="description" content="Free Web tutorials"/>
                     <meta property="og:description" content="Placeholder"/>
                     <meta property="og:image" content="/voxel.png"/>
+                    <meta name="theme-color" content="#121212"/>
                 </Head>
                 {this.props.children}
                 <style jsx global>{`

@@ -67,6 +67,20 @@ const TableButton = styled(Button)`
     }
 `;
 
+const Card1 = styled(Card)`
+    @media screen and (max-width: 768px) {
+        min-width: 100%;
+    }
+`;
+
+const Grid1 = styled(Grid)`
+    @media screen and (max-width: 768px) {
+        flex-wrap: wrap;
+        padding-left: 0;
+        padding-right: 0;
+    }
+`;
+
 export default withRouter(class ContainerBindingCreator extends React.Component {
     constructor(props) {
         super(props);
@@ -93,7 +107,7 @@ export default withRouter(class ContainerBindingCreator extends React.Component 
                         <Grid spacing="24px" direction="vertical">
                             <Stepper step={this.state.step} steps={[
                                 ["Choose Type", 
-                                    <Grid key={0} spacing="16px" padding="24px 0" direction="horziontal">
+                                    <Grid key={0} wrap="wrap" width="100%" spacing="16px" padding="24px 0" direction="horziontal" justifyContent="center">
                                         <Method img="/voxel.png" direction="vertical" alignItems="center" justifyContent="space-between">
                                             <div/>
                                             <Grid width="100%" height="30%" padding="0 16px" alignItems="center" justifyContent="space-between">
@@ -119,7 +133,7 @@ export default withRouter(class ContainerBindingCreator extends React.Component 
                                 ],
                                 [this.state.type >= 0 ? ["Choose Group"][this.state.type] : "Step 2",
                                     [
-                                        <Grid key={0} spacing="16px" padding="24px 128px">
+                                        <Grid1 key={0} width="100%" spacing="16px" padding="24px 128px" justifyContent="center">
                                             <Grid direction="vertical">
                                                 <InputLabel for="groupNameId" text="Group Name or ID"/>
                                                 <ExpInput
@@ -129,6 +143,7 @@ export default withRouter(class ContainerBindingCreator extends React.Component 
                                                     onChange={(event) => this.setState({
                                                         groupNameId: event.target.value
                                                     })}
+                                                    autoComplete="none"
                                                 />
                                                 <Button
                                                     width="236px"
@@ -142,7 +157,7 @@ export default withRouter(class ContainerBindingCreator extends React.Component 
                                                     <Alert title="Unknown Error" body={this.state.error} margin="16px 0" severity="error"/>
                                                 }
                                             </Grid>
-                                            <Card title="Groups Found" margin="16px 0" padding={0}>
+                                            <Card1 title="Groups Found" width="auto" margin="16px 0" padding={0}>
                                                 <Table>
                                                     <thead>
                                                         <tr>
@@ -193,17 +208,17 @@ export default withRouter(class ContainerBindingCreator extends React.Component 
                                                         }
                                                     </tbody>
                                                 </Table>
-                                            </Card>
-                                        </Grid>
+                                            </Card1>
+                                        </Grid1>
                                     ][this.state.type]
                                 ],
                                 [this.state.type >= 0 ? ["Choose Role"][this.state.type] : "Step 3",
                                     [
-                                        <Grid key={0} spacing="16px" padding="24px 128px" direction="vertical">
+                                        <Grid1 key={0} width="100%" spacing="16px" padding="24px 128px" direction="vertical">
                                             {this.state.error &&
                                                 <Alert title="Unknown Error" body={this.state.error} margin="16px 0" severity="error"/>
                                             }
-                                            <Card title="Group Roles Found" margin="16px 0" padding={0}>
+                                            <Card1 title="Group Roles Found" margin="16px 0" padding={0}>
                                                 <Table>
                                                     <thead>
                                                         <tr>
@@ -251,8 +266,8 @@ export default withRouter(class ContainerBindingCreator extends React.Component 
                                                         }
                                                     </tbody>
                                                 </Table>
-                                            </Card>
-                                        </Grid>
+                                            </Card1>
+                                        </Grid1>
                                     ][this.state.type]
                                 ],
                                 ["Successful",

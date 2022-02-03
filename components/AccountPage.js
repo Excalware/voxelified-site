@@ -25,6 +25,7 @@ export default class ContainerPage extends React.Component {
                     <Navigation data={[
                         ["Account", [
                             ["Preferences", "/my/account"],
+                            ["Authentication", "/my/account/auth"],
                             ["Logout", supautil.logout, "BoxArrowUpRight"]
                         ]],
                         ["Roblox Verification", [

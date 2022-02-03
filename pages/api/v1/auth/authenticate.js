@@ -27,7 +27,5 @@ export default async function handler(request, response) {
             message: 'body.session is invalid.',
             error: true
         });
-
-    console.log(request.body);
     return supabase.auth.api.setAuthCookie(request, response);
 }

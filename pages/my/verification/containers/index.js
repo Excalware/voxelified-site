@@ -15,6 +15,7 @@ const Container = styled.a`
     border: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
     padding: 16px 24px;
+    min-width: 260px;
     transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     border-radius: 8px;
     flex-direction: column;
@@ -24,6 +25,12 @@ const Container = styled.a`
     &:hover {
         cursor: pointer;
         background-color: #2c2c2c;
+    }
+`;
+
+const PageGrid = styled(Grid)`
+    @media screen and (max-width: 768px) {
+        margin-left: 40px;
     }
 `;
 
@@ -38,25 +45,27 @@ export default class VerificationContainers extends React.Component {
     render() {
         return (
             <AccountPage>
-                <Button theme="secondary" onClick={this.loadContainers.bind(this)} disabled={this.state.loading}>
-                    <ArrowClockwise/>
-                    Refresh
-                </Button>
-                <Grid spacing="24px">
-                    {this.state.containers && this.state.containers.map((container, index) =>
-                        <Container key={index} href={`/verification/containers/${container.id}`}>
-                            <Grid spacing="8px" alignItems="center">
-                                <Box color="rgba(255, 255, 255, 0.8)"/>
-                                <Typography text={container.name} size="1.1rem"/>
-                            </Grid>
-                            <Grid spacing="8px" alignItems="center">
-                                <PersonBadge color="rgba(255, 255, 255, 0.8)"/>
-                                <Typography text="Container Manager" size="0.9rem" weight={400} lineHeight={1.5}/>
-                            </Grid>
-                            <Typography text={container.id} size="0.5rem" color="rgba(255, 255, 255, 0.2)" weight={300} margin="4px 0 0 0"/>
-                        </Container>
-                    )}
-                </Grid>
+                <PageGrid spacing="16px" direction="vertical">
+                    <Button theme="secondary" onClick={this.loadContainers.bind(this)} disabled={this.state.loading}>
+                        <ArrowClockwise/>
+                        Refresh
+                    </Button>
+                    <Grid wrap="wrap" spacing="24px">
+                        {this.state.containers && this.state.containers.map((container, index) =>
+                            <Container key={index} href={`/verification/containers/${container.id}`}>
+                                <Grid spacing="8px" alignItems="center">
+                                    <Box color="rgba(255, 255, 255, 0.8)"/>
+                                    <Typography text={container.name} size="1.1rem"/>
+                                </Grid>
+                                <Grid spacing="8px" alignItems="center">
+                                    <PersonBadge color="rgba(255, 255, 255, 0.8)"/>
+                                    <Typography text="Container Manager" size="0.9rem" weight={400} lineHeight={1.5}/>
+                                </Grid>
+                                <Typography text={container.id} size="0.5rem" color="rgba(255, 255, 255, 0.2)" weight={300} margin="4px 0 0 0"/>
+                            </Container>
+                        )}
+                    </Grid>
+                </PageGrid>
             </AccountPage>
         );
     }
