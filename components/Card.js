@@ -8,6 +8,12 @@ const CardComponent = styled(Grid)`
     overflow: hidden;
     border-radius: 8px;
     background-color: #222222;
+
+    @media only screen and (max-width: 768px) {
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+    }
 `;
 
 const TitleGrid = styled(Grid)`
@@ -34,7 +40,7 @@ export default class Card extends React.Component {
                         {this.props.buttons}
                     </Grid>
                 </TitleGrid>
-                <Grid padding={this.props.padding ?? "16px 24px"}>
+                <Grid wrap="wrap" padding={this.props.padding ?? "16px 24px"}>
                     {this.props.children}
                 </Grid>
             </CardComponent>

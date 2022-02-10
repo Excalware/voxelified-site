@@ -91,9 +91,10 @@ const ButtonComponent = styled.a`
     gap: 8px;
     width: ${props => props.width ?? "fit-content"};
     color: ${props => props.theme.textColor.normal};
+    cursor: pointer;
     margin: ${props => props.margin ?? 0};
     border: ${props => props.theme.border.normal};
-    cursor: pointer;
+    height: ${props => props.height ?? "fit-content"};
     outline: 0;
     opacity: ${props => props.theme.opacity.normal};
     padding: ${props => props.size.padding};

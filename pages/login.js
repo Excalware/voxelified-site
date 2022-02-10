@@ -37,7 +37,7 @@ export default withRouter(class LoginPage extends React.Component {
     render() {
         return (
             <App title="Voxel Account">
-                <Header text="voxel" icon={"/favicon.ico"}/>
+                <Header text="voxel" icon={"/voxel-white.svg"}/>
                 <Main>
                     {this.state.redirecting ?
                         <RedirectGrid direction="vertical" alignItems="center" justifyContent="center">

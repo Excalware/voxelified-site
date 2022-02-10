@@ -23,7 +23,7 @@ export default class Account extends React.Component {
             <AccountPage>
                 <Card title="Account Information">
                     <Grid spacing="16px" direction="vertical">
-                        <Grid spacing="24px">
+                        <Grid wrap="wrap" spacing="24px">
                             <Grid direction="vertical">
                                 <InputLabel for="name-input" text="Account Name"/>
                                 <ExpInput

@@ -1,14 +1,13 @@
 import ky from 'ky';
 import React from 'react';
 import styled from 'styled-components';
-import { PersonPlus, ClipboardPlus } from 'react-bootstrap-icons';
+import { Plus, ClipboardPlus } from 'react-bootstrap-icons';
 
 import App from '../../components/App';
 import Main from '../../components/Main';
 import Card from '../../components/Card';
 import Grid from '../../components/Grid';
 import Image from '../../components/Image';
-import Table from '../../components/Table';
 import Alert from '../../components/Alert';
 import Header from '../../components/Header';
 import Button from '../../components/Experimental/Button';
@@ -16,6 +15,7 @@ import Stepper from '../../components/Stepper';
 import ExpInput from '../../components/Input/ExpInput';
 import Typography from '../../components/Typography';
 import RouteGuard from '../../components/RouteGuard';
+import RobloxUser from '../../components/RobloxUser';
 import InputLabel from '../../components/Input/Label';
 
 import { supabase } from '../../lib/supabase/client';
@@ -38,31 +38,17 @@ const Method = styled(Grid)`
     }
 `;
 
-const TableButtonParent = styled.th`
-    width: 65px;
+const Card1 = styled(Card)`
+    @media screen and (max-width: 768px) {
+        min-width: 100%;
+    }
 `;
 
-const TableButton = styled(Button)`
-    width: 65px;
-    color: white;
-    height: 65px;
-    border: none;
-    margin: -12px -16px -12px -24px;
-    min-width: unset;
-    border-radius: 0;
-    background-color: transparent;
-
-    &:active {
-        color: white;
-        background-color: rgba(255, 255, 255, 0.1);
-    }
-    &:hover {
-        color: white;
-        background-color: rgba(255, 255, 255, 0.06);
-    }
-    &:disabled {
-        color: rgba(255, 255, 255, 0.5);
-        background-color: rgba(0, 0, 0, 0.1);
+const Grid1 = styled(Grid)`
+    @media screen and (max-width: 768px) {
+        flex-wrap: wrap;
+        padding-left: 0;
+        padding-right: 0;
     }
 `;
 
@@ -90,13 +76,13 @@ export default class VerificationConnect extends React.Component {
                 <RouteGuard>
                     <Header
                         text="voxel"
-                        icon={"/favicon.ico"}
+                        icon={"/voxel-white.svg"}
                     />
                     <Main>
                         <Grid spacing="24px" direction="vertical">
                             <Stepper step={this.state.step} steps={[
                                 ["Choose Account",
-                                    <Grid key={0} spacing="16px" padding="24px 128px">
+                                    <Grid1 key={0} wrap="wrap" width="100%" spacing="16px" padding="24px 128px" justifyContent="center">
                                         <Grid direction="vertical">
                                             <InputLabel for="nameUserId" text="Name, Username or ID"/>
                                             <ExpInput
@@ -119,62 +105,33 @@ export default class VerificationConnect extends React.Component {
                                                 <Alert title="Unknown Error" body={this.state.error} margin="16px 0" severity="error"/>
                                             }
                                         </Grid>
-                                        <Card title="Accounts Found" margin="16px 0" padding={0}>
-                                            <Table>
-                                                <thead>
-                                                    <tr>
-                                                        <TableButtonParent/>
-                                                        <th>
-                                                            Display Name
-                                                        </th>
-                                                        <th>
-                                                            Username
-                                                        </th>
-                                                        <th>
-                                                            ID
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {this.state.accounts.length == 0 ?
-                                                        <tr>
-                                                            <td/>
-                                                            <td>
-                                                                No Accounts Found
-                                                            </td>
-                                                            <td/>
-                                                            <td/>
-                                                        </tr>
-                                                    :
-                                                        this.state.accounts.map((user, index) =>
-                                                            <tr key={index}>
-                                                                <td>
-                                                                    <TableButton onClick={() => this.selectAccount(user)}>
-                                                                        <PersonPlus size={24}/>
-                                                                    </TableButton>
-                                                                </td>
-                                                                <td>
-                                                                    <Grid spacing="12px" alignItems="center">
-                                                                        <Image src={user.image} alt="User Image" width="40px" height="40px"/>
-                                                                        {user.displayName}
-                                                                    </Grid>
-                                                                </td>
-                                                                <td>
-                                                                    {user.name}
-                                                                </td>
-                                                                <td>
-                                                                    {user.id}
-                                                                </td>
-                                                            </tr>
-                                                        )
-                                                    }
-                                                </tbody>
-                                            </Table>
-                                        </Card>
-                                    </Grid>
+                                        <Card1 title="Accounts Found" margin="16px 0">
+                                            <Grid spacing="8px" direction="vertical">
+                                                {this.state.accounts.length > 0 ?
+                                                    this.state.accounts.map((user, index) =>
+                                                        <RobloxUser
+                                                            key={index}
+                                                            id={user.id}
+                                                            name={user.name}
+                                                            avatar={user.image}
+                                                            displayName={user.displayName}
+                                                            buttons={
+                                                                <Button onClick={() => this.selectAccount(user)}>
+                                                                    <Plus/>
+                                                                    Continue
+                                                                </Button>
+                                                            }
+                                                        />
+                                                    )
+                                                :
+                                                    "place and hold er"
+                                                }
+                                            </Grid>
+                                        </Card1>
+                                    </Grid1>
                                 ],
                                 ["Choose Method", 
-                                    <Grid key={0} spacing="16px" padding="24px 0" direction="horziontal">
+                                    <Grid key={0} wrap="wrap" width="100%" spacing="16px" padding="24px 0" direction="horziontal" justifyContent="center">
                                         <Method img="/verify-method-1.png" alt="Method 0 Image" direction="vertical" alignItems="center" justifyContent="space-between">
                                             <div/>
                                             <Grid width="100%" margin="0 0 10px 0" padding="0 16px" alignItems="center" justifyContent="space-between">

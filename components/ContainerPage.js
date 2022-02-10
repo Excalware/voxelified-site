@@ -46,7 +46,7 @@ export default withRouter(class ContainerPage extends React.Component {
                                 <BetaText text="beta"/>
                             </Grid>
                         }
-                        icon={"/favicon.ico"}
+                        icon={"/voxel-white.svg"}
                     />
                     <Navigation data={[
                         ["Container", [

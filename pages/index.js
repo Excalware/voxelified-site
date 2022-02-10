@@ -7,7 +7,7 @@ import Typography from '../components/Typography';
 export default function Home() {
     return (
         <App title="Voxel Home">
-            <Header text="voxel" icon={"/favicon.ico"}>
+            <Header text="voxel" icon={"/voxel-white.svg"}>
                 <Link href="/login" color="#ffffffb8" weight={400} hoverColor="white">
                     Login
                 </Link>
