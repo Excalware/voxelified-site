@@ -20,7 +20,7 @@ export default class ContainerPage extends React.Component {
                 <RouteGuard>
                     <Header
                         text="voxel account"
-                        icon={"/favicon.ico"}
+                        icon={"/voxel-white.svg"}
                     />
                     <Navigation data={[
                         ["Account", [

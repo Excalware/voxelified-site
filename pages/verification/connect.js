@@ -76,7 +76,7 @@ export default class VerificationConnect extends React.Component {
                 <RouteGuard>
                     <Header
                         text="voxel"
-                        icon={"/favicon.ico"}
+                        icon={"/voxel-white.svg"}
                     />
                     <Main>
                         <Grid spacing="24px" direction="vertical">

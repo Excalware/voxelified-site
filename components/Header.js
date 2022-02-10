@@ -48,7 +48,7 @@ export default class Header extends React.Component {
                             text={this.props.text}
                             size="1.5rem"
                             weight={600}
-                            margin="0 0 0 16px"
+                            margin="0 0 0 12px"
                         />
                     : this.props.text}
                 </BrandComponent>

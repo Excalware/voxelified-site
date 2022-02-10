@@ -6,7 +6,7 @@ import Typography from '../components/Typography';
 export default function PrivacyPolicy() {
     return (
         <App>
-            <Header text="voxel" icon={"/favicon.ico"}/>
+            <Header text="voxel" icon={"/voxel-white.svg"}/>
             <Main>
                 <Typography
                     text="Privacy."
