@@ -1,0 +1,3 @@
+[submodule "voxeliface"]
+	path = voxeliface
+	url = git@github.com:Excalware/react-voxeliface.git
