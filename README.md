@@ -1,5 +1,5 @@
-# Voxel Website
-Repository for the [Voxel Website](https://www.voxelified.com)
+# Voxelified Website
+Source Code of https://www.voxelified.com
 </br></br>
 
 ## Contribution
