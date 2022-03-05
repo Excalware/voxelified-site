@@ -5,6 +5,9 @@
     "repository": "https://github.com/Excalware/voxel-site.git",
     "author": "Excalware",
     "license": "MIT",
+    "scripts": {
+        "dev": "next dev"
+    },
     "dependencies": {
         "@supabase/supabase-js": "^1.29.3",
         "eslint": "^8.7.0",
