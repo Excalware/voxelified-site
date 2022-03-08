@@ -6,7 +6,8 @@
     "author": "Excalware",
     "license": "MIT",
     "scripts": {
-        "dev": "next dev"
+        "dev": "next dev",
+        "vercel:build": "git submodule update --init voxeliface && next build"
     },
     "dependencies": {
         "@stitches/react": "^1.2.7",
