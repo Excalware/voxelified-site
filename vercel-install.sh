@@ -2,7 +2,7 @@
 SUBMODULE_GITHUB=github.com/Excalware/react-voxeliface
 
 # .gitmodules submodule path
-SUBMODULE_PATH=library
+SUBMODULE_PATH=voxeliface
 
 # github access token is necessary
 # add it to Environment Variables on Vercel
