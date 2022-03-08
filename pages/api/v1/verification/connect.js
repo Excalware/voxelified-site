@@ -1,5 +1,5 @@
 import * as uuid from 'uuid';
-import { supabase, supautil } from '../../../../lib/supabase/client';
+import { supabase, supautil } from '/lib/supabase/client';
 export default async function handler(request, response) {
     if(request.method !== "POST")
         return response.status(405).json({
@@ -40,10 +40,10 @@ export default async function handler(request, response) {
             error: true
         });
 
-    const { data, error2 } = await supabase
+    const { data, error: error2 } = await supabase
     .from('verificationUsers')
     .select('*')
-    .eq('userId', userId);
+    .match({ userId });
     if(error2)
         return response.status(500).json({
             state: 'supabase_error',
@@ -51,9 +51,23 @@ export default async function handler(request, response) {
             error: true
         });
 
+    if(!data[0] || data[0]?.uid !== user.id)
+        return response.status(400).json({
+            state: 'connected_other_user',
+            message: `Provided Roblox User was connected by a different account`,
+            error: true
+        });
+
+    if(data[0]?.verified)
+        return response.status(400).json({
+                state: 'already_verified',
+                message: 'User is already verified',
+                error: true
+            });
+
     const code = uuid.v5(userId.toString(), user.id);
-    if(data.length == 0) {
-        const { data2, error3 } = await supabase
+    if(data.length === 0) {
+        const { data: data2, error: error3 } = await supabase
         .from('verificationUsers')
         .insert([
             {
@@ -62,7 +76,14 @@ export default async function handler(request, response) {
                 uid: user.id
             }
         ]);
+        if(error3)
+            return response.status(500).json({
+                state: 'supabase_error',
+                message: error3.message,
+                error: true
+            });
         return response.status(200).json({
+            state: 'created_user',
             code,
             data: data2,
             error: false

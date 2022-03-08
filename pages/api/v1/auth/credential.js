@@ -1,4 +1,4 @@
-import { supabase } from '../../../../lib/supabase/client';
+import { supabase } from '/lib/supabase/client';
 export default async function handler(request, response) {
     if(request.method !== "POST")
         return response.status(405).json({

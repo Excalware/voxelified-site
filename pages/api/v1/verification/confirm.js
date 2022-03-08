@@ -1,6 +1,6 @@
 import ky from 'ky';
 import * as uuid from 'uuid';
-import { supabase } from '../../../../lib/supabase/client';
+import { supabase } from '/lib/supabase/client';
 export default async function handler(request, response) {
     if(request.method !== "POST")
         return response.status(405).json({
@@ -49,7 +49,7 @@ export default async function handler(request, response) {
 
     const { data, error2 } = await supabase
     .from('verificationUsers')
-    .select('*')
+    .select('userId')
     .match({ code, verified: false });
     if(error2)
         return response.status(500).json({

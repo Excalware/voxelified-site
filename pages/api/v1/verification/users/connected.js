@@ -1,4 +1,4 @@
-import { supabase } from '../../../../../lib/supabase/client';
+import { supabase } from '/lib/supabase/client';
 export default async function handler(request, response) {
     if(request.method !== "GET")
         return response.status(405).json({
@@ -26,7 +26,7 @@ export default async function handler(request, response) {
 
     const { data, error2 } = await supabase
     .from('verificationUsers')
-    .select('*')
+    .select('userId, verified')
     .eq('uid', user.id);
     if(error2)
         return response.status(500).json({
