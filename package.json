@@ -7,7 +7,7 @@
     "license": "MIT",
     "scripts": {
         "dev": "next dev",
-        "vercel:build": "ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts && git submodule update --init voxeliface && next build"
+        "vercel:install": "./vercel-submodule-workaround.sh && yarn --ignore-scripts --production=false"
     },
     "dependencies": {
         "@stitches/react": "^1.2.7",
