@@ -1,5 +1,5 @@
 # github submodule repo address without https:// prefix
-SUBMODULE_GITHUB=github.com/Excalware/voxeliface
+SUBMODULE_GITHUB=github.com/Excalware/react-voxeliface
 
 # .gitmodules submodule path
 SUBMODULE_PATH=library
