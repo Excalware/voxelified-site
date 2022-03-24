@@ -23,24 +23,7 @@ export default withRouter(class ContainerPage extends React.Component {
         return (
             <App title="Voxelified Containers">
                 <RouteGuard>
-                    <Header
-                        text={<>
-                            <Typography
-                                text="voxelified containers"
-                                size="1.5rem"
-                                weight={600}
-                            />
-                            <Typography text="beta" size=".8rem" color="#ffffffad" weight={600} css={{
-                                margin: '0 0 0 8px',
-                                height: 'fit-content',
-                                padding: '1px 8px',
-                                background: '#ffffff33',
-                                fontFamily: 'Nunito, sans-serif',
-                                borderRadius: 8
-                            }}/>
-                        </>}
-                        icon={"/voxel-white.svg"}
-                    />
+                    <Header/>
                     <Grid height="calc(100vh - 64px)">
                         <Navigation data={[
                             ["Container", [

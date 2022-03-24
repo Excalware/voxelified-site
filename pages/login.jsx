@@ -10,6 +10,7 @@ import Header from '/components/Header';
 import Spinner from '/voxeliface/components/Spinner';
 import Divider from '/voxeliface/components/Divider';
 import TextInput from '/voxeliface/components/Input/Text';
+import LoginHelp from '/voxeliface/components/LogInButtons/LoginHelp';
 import Typography from '/voxeliface/components/Typography';
 import InputLabel from '/components/InputLabel';
 import DiscordLogin from '/voxeliface/components/LogInButtons/Discord';
@@ -31,7 +32,7 @@ export default withRouter(class LoginPage extends React.Component {
 
     render() {
         return (
-            <App title="Voxel Account">
+            <App title="Voxelified Login">
                 <Header/>
                 <Main>
                     {this.state.redirecting ?
@@ -42,7 +43,7 @@ export default withRouter(class LoginPage extends React.Component {
                         </Grid>
                     :
                         <Grid width="100%" direction="vertical" alignItems="center">
-                            <Typography text="Voxelified Login" size="3rem" weight={700} margin="0 0 24px 0"/>
+                            <Typography text="Voxelified Login" size="3rem" family="Nunito" weight={700} margin="0 0 24px 0"/>
                             <DiscordLogin onClick={this.discordSignIn.bind(this)}/>
                             <Divider width="250px" margin="12px 0"/>
                             
@@ -129,7 +130,7 @@ export default withRouter(class LoginPage extends React.Component {
         await supabase.auth.signIn({
             provider: 'discord'
         }, {
-            redirectTo: `https://${location.hostname}/login`
+            redirectTo: `${location.protocol}//${location.hostname}${location.port ? `:${location.port}` : ''}/login`
         });
     }
 

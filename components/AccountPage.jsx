@@ -18,10 +18,7 @@ export default class ContainerPage extends React.Component {
         return (
             <App title="Voxelified Account">
                 <RouteGuard>
-                    <Header
-                        text="voxelified account"
-                        icon={"/voxel-white.svg"}
-                    />
+                    <Header/>
                     <Grid height="calc(100vh - 64px)">
                         <Navigation data={[
                             ["Account", [
