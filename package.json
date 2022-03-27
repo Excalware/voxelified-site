@@ -7,6 +7,8 @@
     "license": "MIT",
     "scripts": {
         "dev": "next dev",
+        "start": "next start",
+        "build": "next build",
         "vercel:install": "bash ./vercel-install.sh && yarn --ignore-scripts --production=false"
     },
     "dependencies": {

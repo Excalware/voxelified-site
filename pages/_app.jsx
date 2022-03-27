@@ -1,4 +1,4 @@
-import '../public/uiblox.css';
+import '/voxeliface/src/index.css';
 export default function App({ Component, pageProps }) {
-    return <Component {...pageProps} />;
+    return <Component {...pageProps}/>;
 };

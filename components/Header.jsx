@@ -1,12 +1,12 @@
 import React from 'react';
 
 import Image from '/voxeliface/components/Image';
-import Header from '/voxeliface/components/Header';
+import DefaultHeader from '/voxeliface/components/Header';
 
-export default class InputLabel extends React.Component {
+export default class Header extends React.Component {
     render() {
         return (
-            <Header css={{
+            <DefaultHeader css={{
                 background: '#25272c'
             }} brand={<>
                 <Image
