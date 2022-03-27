@@ -51,7 +51,7 @@ export default async function handler(request, response) {
             error: true
         });
 
-    if(!data[0] || data[0]?.uid !== user.id)
+    if(data[0] && data[0]?.uid !== user.id)
         return response.status(400).json({
             state: 'connected_other_user',
             message: `Provided Roblox User was connected by a different account`,
@@ -60,10 +60,10 @@ export default async function handler(request, response) {
 
     if(data[0]?.verified)
         return response.status(400).json({
-                state: 'already_verified',
-                message: 'User is already verified',
-                error: true
-            });
+            state: 'already_verified',
+            message: 'User is already verified',
+            error: true
+        });
 
     const code = uuid.v5(userId.toString(), user.id);
     if(data.length === 0) {
