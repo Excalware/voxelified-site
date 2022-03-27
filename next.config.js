@@ -7,5 +7,25 @@ const withTM = require('next-transpile-modules')(['ky', 'uuid'], {
 
 module.exports = withTM({
     reactStrictMode: true,
-    optimizeFonts: true
+    optimizeFonts: true,
+
+    redirects() {
+        return [
+            {
+                source: '/my',
+                destination: '/my/account',
+                permanent: true
+            },
+            {
+                source: '/verification',
+                destination: '/my/verification',
+                permanent: true
+            },
+            {
+                source: '/verification/containers',
+                destination: '/my/verification/containers',
+                permanent: true
+            }
+        ];
+    }
 });

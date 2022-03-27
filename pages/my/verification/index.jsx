@@ -3,6 +3,7 @@ import React from 'react';
 
 import Grid from '/voxeliface/components/Grid';
 import Card from '/voxeliface/components/Card';
+import Link from '/voxeliface/components/Link';
 import Table from '/voxeliface/components/Table';
 import Typography from '/voxeliface/components/Typography';
 import AccountPage from '/components/AccountPage';
@@ -71,6 +72,12 @@ export default class Verification extends React.Component {
                                 }
                             </tbody>
                         </Table>
+                    </Grid>
+                </Card>
+                <Card title="Not sure where to go?">
+                    <Grid direction="vertical">
+                        <Typography text="Need to get verified?" color="#ffffffcc" weight={400}/>
+                        <Link href="/verification/connect">Click here!</Link>
                     </Grid>
                 </Card>
             </AccountPage>
