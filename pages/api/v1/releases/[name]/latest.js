@@ -49,7 +49,7 @@ export default async function handler(request, response) {
         };
         for (const { name: aname, browser_download_url } of release.assets) {
             const platform = [
-                [/\.msi\.zip$/, 'win64'],
+                [/\.msi\.zip$/, 'windows-x86_64'],
                 [/\.AppImage\.zip$/, 'linux']
             ].find(p => p[0].test(browser_download_url))?.[1];
             if (!platform)
