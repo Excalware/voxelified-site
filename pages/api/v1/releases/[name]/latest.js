@@ -14,7 +14,7 @@ async function getSignature(name, assets) {
         return null;
 
     const response = await ky.get(signature.browser_download_url).text();
-    console.log(response);
+    return response;
 }
 
 let latest = {}, cached = 0;
