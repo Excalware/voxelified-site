@@ -43,7 +43,7 @@ export default async function handler(request, response) {
 
         latest[name] = {
             name: release.tag_name,
-            notes: release.name,
+            notes: release.body,
             pub_date: release.published_at,
             platforms: {}
         };
