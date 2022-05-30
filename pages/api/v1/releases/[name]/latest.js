@@ -1,10 +1,20 @@
 import ky from 'ky';
-import lt from 'semver/functions/lt';
-import { Octokit } from "@octokit/rest";
+import { Octokit } from '@octokit/rest';
+import { createAppAuth } from '@octokit/auth-app';
 
-const octokit = new Octokit();
+const octokit = new Octokit({
+    authStrategy: createAppAuth,
+    auth: {
+        appId: 205655,
+        clientId: process.env.GITHUB_CLIENT_ID,
+        privateKey: process.env.GITHUB_KEY,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET,
+        installationId: 26083901
+    }
+});
 const applications = {
     'mdpkm': 'blookerss',
+    'voxura': 'voxelified',
     'goggle-trans': 'blookerss'
 };
 
@@ -26,7 +36,7 @@ export default async function handler(request, response) {
             error: true
         });
 
-    const { name, target, current } = request.query;
+    const { name } = request.query;
     const owner = applications[name];
     if(!owner)
         return response.status(400).json({
