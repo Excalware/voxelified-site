@@ -37,3 +37,5 @@ mv tmp/* $SUBMODULE_PATH/ # move the submodule to the submodule path
 
 # clean up
 rm -rf tmp # remove the tmp folder
+cd voxeliface
+yarn install
