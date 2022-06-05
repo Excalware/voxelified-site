@@ -2,27 +2,16 @@ import React from 'react';
 
 import Image from '/voxeliface/components/Image';
 import DefaultHeader from '/voxeliface/components/Header';
-
-export default class Header extends React.Component {
-    render() {
-        return (
-            <DefaultHeader css={{
-                background: '#25272c'
-            }} brand={<>
+export default function Header(props) {
+    return (
+        <DefaultHeader brand={<>
+            {props.image ??
                 <Image
-                    src={this.props.icon ?? "/img/brand-text.svg"}
-                    alt="Voxelified Text Vector"
-                    size={48}
+                    src="/img/banners/brand_text.svg"
                     width={192}
-                    objectFit="contain"
-                    suppressHydrationWarning={true}
-                    css={{
-                        margin: '0 12px 0 0',
-                        verticalAlign: 'middle'
-                    }}
+                    height={48}
                 />
-                {this.props.text}
-            </>} {...this.props}/>
-        );
-    }
+            }
+        </>} {...props}/>
+    );
 };

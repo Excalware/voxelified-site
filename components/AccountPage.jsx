@@ -1,26 +1,23 @@
 import React from 'react';
 
-import App from '/voxeliface/components/App';
+import App from '/components/App';
 import Main from '/voxeliface/components/Main';
 import Grid from '/voxeliface/components/Grid';
 import Header from '/components/Header';
-import Navigation from '/voxeliface/components/Navigation';
 import RouteGuard from './RouteGuard';
+import * as Navigation from './Navigation';
 
 import { supautil } from '/lib/supabase/client';
-
-export default class ContainerPage extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <App title="Voxelified Account">
-                <RouteGuard>
-                    <Header/>
-                    <Grid height="calc(100vh - 64px)">
-                        <Navigation data={[
+export default function AccountPage({ children }) {
+    return (
+        <App title="Voxelified Account">
+            <RouteGuard>
+                <Header/>
+                <Main>
+                    <Grid height="100vh" margin="1rem 3rem" background="$secondaryBackground2" borderRadius={16} css={{
+                        overflow: 'hidden'
+                    }}>
+                        <Navigation.Root data={[
                             ["Account", [
                                 ["Preferences", "/my/account"],
                                 ["Authentication", "/my/account/auth"],
@@ -32,14 +29,14 @@ export default class ContainerPage extends React.Component {
                                 ["Connect", "/verification/connect", "BoxArrowUpRight"]
                             ]]
                         ]}/>
-                        <Main>
-                            <Grid spacing="24px" direction="vertical">
-                                {this.props.children}
-                            </Grid>
-                        </Main>
+                        <Grid width="100%" padding="2rem" direction="vertical" css={{
+                            overflow: 'hidden auto'
+                        }}>
+                            {children}
+                        </Grid>
                     </Grid>
-                </RouteGuard>
-            </App>
-        );
-    }
+                </Main>
+            </RouteGuard>
+        </App>
+    );
 };

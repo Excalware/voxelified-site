@@ -1,77 +1,56 @@
-import React from 'react';
-import { withRouter } from 'next/router';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
 import Grid from '/voxeliface/components/Grid';
-import Card from '/voxeliface/components/Card';
+import Header from '/voxeliface/components/Typography/Header';
+import Spinner from '/voxeliface/components/Spinner';
 import TextInput from '/voxeliface/components/Input/Text';
 import InputLabel from '/components/InputLabel';
+import Typography from '/voxeliface/components/Typography';
 import ContainerPage from '/components/ContainerPage';
 
 import { supabase } from '/lib/supabase/client';
+export default function Container() {
+    const { query: { id } } = useRouter();
+    const { access_token } = useSelector(state => state.user.session);
 
-export default withRouter(class Container extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            containerName: ""
-        };
-    }
+    const [loading, setLoading] = useState(false);
+    const [container, setContainer] = useState();
+    useEffect(() => {
+        if(!container && !loading && access_token) {
+            setLoading(true);
 
-    render() {
-        return (
-            <ContainerPage>
-                <Card title="Container Information">
-                    <Grid spacing="16px" direction="vertical">
-                        <Grid spacing="24px">
-                            <Grid direction="vertical">
-                                <InputLabel for="name-input" text="Container Name"/>
-                                <TextInput
-                                    id="name-input"
-                                    value={this.state.containerName}
-                                    onChange={(event) => this.setState({
-                                        containerName: event.target.value
-                                    })}
-                                    readOnly
-                                    disabled
-                                />
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </Card>
-            </ContainerPage>
-        );
-    }
-
-    componentDidMount() {
-        const session = supabase.auth.session();
-        if(session)
-            this.setSession(session);
-
-        supabase.auth.onAuthStateChange((event, session) => {
-            if(event == 'SIGNED_IN')
-                this.setSession(session);
-        });
-    }
-
-    setSession(session) {
-        setTimeout(async() => {
-            const { id } = this.props.router.query;
-            this.setState({
-                session,
-                
-                email: session.user.email
+            supabase.from('verificationContainers')
+            .select('name')
+            .eq('id', id).then(({ data, error }) => {
+                if(error)
+                    throw error;
+                setContainer(data[0]);
+                setLoading(false);
             });
-
-            const container = await supabase
-            .from('verificationContainers')
-            .select('*')
-            .eq('id', id).then(({data, error}) => data[0]);
-
-            this.setState({
-                container,
-                containerName: container.name
-            });
-        }, 1000);
-    }
-});
+        }
+    });
+    return (
+        <ContainerPage>
+            <Header>Container Information</Header>
+            {loading ?
+                <Typography size="1.1rem" color="$primaryColor" family="Nunito" css={{ gap: '1rem' }}>
+                    <Spinner/>
+                    Loading...
+                </Typography>
+            :
+                <Grid direction="vertical">
+                    <InputLabel for="name-input" text="Container Name"/>
+                    <TextInput
+                        id="name-input"
+                        value={container?.name}
+                        readOnly
+                        disabled
+                    />
+                </Grid>
+            }
+        </ContainerPage>
+    );
+};
 export { getServerSideProps } from '/lib/auth';

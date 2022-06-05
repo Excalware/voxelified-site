@@ -25,12 +25,12 @@ export default async function handler(request, response) {
             });
         });
     } catch(err) {
-        response.status(500).json({
+        console.error(err);
+        return response.status(500).json({
             state: "internal_error",
             message: "Internal Request Error",
             error: true
         });
-        throw err;
     }
     return response.status(200).json({
         data,

@@ -1,217 +1,144 @@
-import React from 'react';
-import { withRouter } from 'next/router';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+import { PlusLg } from 'react-bootstrap-icons';
 
 import Grid from '/voxeliface/components/Grid';
-import Card from '/voxeliface/components/Card';
 import Alert from '/voxeliface/components/Alert';
 import Table from '/voxeliface/components/Table';
 import Button from '/voxeliface/components/Button';
+import Header from '/voxeliface/components/Typography/Header';
 import Spinner from '/voxeliface/components/Spinner';
 import TextInput from '/voxeliface/components/Input/Text';
-import Typography from '/voxeliface/components/Typography';
-import InputLabel from '/components/InputLabel';
+import BasicSpinner from '/voxeliface/components/BasicSpinner';
 import ContainerPage from '/components/ContainerPage';
 
 import { supabase } from '/lib/supabase/client';
+export default function ContainerMembers() {
+    const { query: { id } } = useRouter();
+    const { access_token } = useSelector(state => state.user.session);
 
-export default withRouter(class ContainerMembers extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            members: [],
-            loading: true,
-            addingMember: false
-        };
-    }
+    const [error, setError] = useState();
+    const [members, setMembers] = useState();
+    const [loading, setLoading] = useState(false);
+    const [memberName, setMemberName] = useState();
+    const [addingMember, setAddingMember] = useState(false);
+    const addMember = async() => {
+        setAddingMember(true);
 
-    render() {
-        return (
-            <ContainerPage>
-                <Card title="Add A Member">
-                    <Grid spacing="16px" direction="vertical">
-                        <Grid spacing="24px">
-                            <Grid direction="vertical">
-                                <InputLabel for="member-input" text="Account Name"/>
-                                <TextInput
-                                    id="member-input"
-                                    value={this.state.memberName}
-                                    onChange={(event) => this.setState({
-                                        memberName: event.target.value
-                                    })}
-                                />
-                                <Button onClick={this.addMember.bind(this)} disabled={this.state.addingMember} css={{
-                                    margin: '8px 0 0 0'
-                                }}>
-                                    Add Member
-                                </Button>
-                            </Grid>
-                            {this.state.error &&
-                                <Alert title="Unknown Error" body={this.state.error} margin="16px 0" severity="error"/>
-                            }
-                        </Grid>
-                    </Grid>
-                </Card>
-                <Card title={
-                    <Grid spacing="12px" alignItems="center">
-                        <Typography
-                            text="Container Members"
-                            size="1.2rem"
-                            color="white"
-                            weight={600}
-                        />
-                        {this.state.loading && <Spinner size={24}/>}
-                    </Grid>
-                } padding={0}>
-                    <Table>
-                        <thead>
-                            <tr>
-                                <th>
-                                    Username
-                                </th>
-                                <th>
-                                    Account Name
-                                </th>
-                                <th>
-                                    Role
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.members.length > 0 ?
-                                this.state.members.map((member, index) =>
-                                    <tr key={index}>
-                                        <td>
-                                            {member.profile.username}
-                                        </td>
-                                        <td>
-                                            {member.profile.name}
-                                        </td>
-                                        <td>
-                                            Manager
-                                        </td>
-                                    </tr>
-                                )
-                            :
-                                <tr>
-                                    <td>
-                                        No Members Found
-                                    </td>
-                                    <td/>
-                                    <td/>
-                                </tr>
-                            }
-                        </tbody>
-                    </Table>
-                </Card>
-            </ContainerPage>
-        );
-    }
-
-    componentDidMount() {
-        const session = supabase.auth.session();
-        if(session)
-            this.setSession(session);
-
-        supabase.auth.onAuthStateChange((event, session) => {
-            if(event == 'SIGNED_IN')
-                this.setSession(session);
-        });
-    }
-
-    setSession(session) {
-        setTimeout(async() => {
-            const { id } = this.props.router.query;
-            this.setState({
-                session,
-                
-                email: session.user.email
-            });
-
-            const container = await supabase
-            .from('verificationContainers')
-            .select('*')
-            .eq('id', id).
-            then(({data, error}) => {
-                if(error)
-                    throw new Error(error.message);
-                return data[0];
-            });
-
-            const members = await supabase
-            .from('containerMembers')
-            .select('*')
-            .eq('cid', id)
-            .then(({data, error}) => {
-                if(error)
-                    throw new Error(error.message);
-                return data;
-            });
-
-            const profiles = await supabase
-            .from('profiles')
-            .select('*')
-            .filter('id', 'in', `(${members.map(m => `"${m.uid}"`).join(',')})`)
-            .then(({data, error}) => {
-                if(error)
-                    throw new Error(error.message);
-                return data;
-            });
-            
-            for (const member of members)
-                member.profile = profiles.find(p => p.id === member.uid);
-
-            this.setState({
-                members,
-                loading: false,
-                container
-            });
-        }, 1000);
-    }
-
-    async addMember() {
-        this.setState({
-            addingMember: true
-        });
-
-        const { data, error } = await supabase
-        .from('profiles')
+        const { data, error } = await supabase.from('profiles')
         .select('*')
-        .eq('name', this.state.memberName);
-        if(error)
-            return this.setState({
-                error: error.message,
-                addingMember: false
-            });
+        .eq('name', memberName);
+        if(error) {
+            setError(error);
+            return setAddingMember(false);
+        }
 
-        supabase
-        .from('containerMembers')
-        .insert([
-            {
-                cid: this.state.container.id,
-                uid: data[0].id
+        await supabase.from('containerMembers')
+        .insert([{
+            cid: id,
+            uid: data[0].id
+        }])
+        .eq('cid', id)
+        .then(({ data: [member], error }) => {
+            if(error) {
+                setError(error);
+                return setAddingMember(false);
             }
-        ])
-        .eq('cid', this.state.container.id)
-        .then(({ data, error }) => {
-            if(error)
-                return this.setState({
-                    error: error.message,
-                    addingMember: false
-                });
-            const member = data[0];
-
-            supabase
-            .from('profiles')
+            supabase.from('profiles')
             .select('*')
             .eq('id', member.uid)
             .then(({ data, error }) => {
+                if(error) {
+                    setError(error);
+                    return setAddingMember(false);
+                }
+
                 member.profile = data[0];
-                this.state.members.push(member);
-                this.setState({
-                    addingMember: false
-                });
+                setMembers(v => [...v, member]);
+                setAddingMember(false);
             });
         });
-    }
-});
+    };
+
+    useEffect(() => {
+        if(!members && !loading && access_token) {
+            setLoading(true);
+
+            supabase.from('containerMembers')
+            .select('*')
+            .eq('cid', id).then(({ data: members, error }) => {
+                if(error)
+                    throw error;
+
+                supabase.from('profiles')
+                .select('*')
+                .filter('id', 'in', `(${members.map(m => `"${m.uid}"`).join(',')})`)
+                .then(({ data, error }) => {
+                    if(error)
+                        throw error;
+                    
+                    setMembers(members.map(v => ({...v, profile: data.find(p => p.id === v.uid)})));
+                    setLoading(false);
+                });
+            });
+        }
+    });
+    return (
+        <ContainerPage>
+            <Header>Add New Member</Header>
+            <Grid spacing={24}>
+                <Grid direction="vertical">
+                    <TextInput
+                        id="member-input"
+                        value={memberName}
+                        onChange={setMemberName}
+                        placeholder="Account name"
+                    >
+                        <Button onClick={addMember} disabled={addingMember}>
+                            {addingMember ? <BasicSpinner size={16}/> : <PlusLg size={14}/>}
+                            Add Member
+                        </Button>
+                    </TextInput>
+                </Grid>
+                {error &&
+                    <Alert title="Unknown Error" body={error} margin="16px 0" severity="error"/>
+                }
+            </Grid>
+
+            <Header spacious>
+                {loading && <Spinner/>}
+                Container Members
+            </Header>
+            <Table css={{
+                border: '1px solid $secondaryBorder',
+                overflow: 'hidden',
+                borderRadius: 8
+            }}>
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Account Name</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {members?.length > 0 ?
+                        members.map((member, index) =>
+                            <tr key={index}>
+                                <td>{member.profile.username}</td>
+                                <td>{member.profile.name}</td>
+                                <td>Manager</td>
+                            </tr>
+                        )
+                    : <tr>
+                        <td>No Members Found</td>
+                        <td/>
+                        <td/>
+                    </tr>}
+                </tbody>
+            </Table>
+        </ContainerPage>
+    );
+};
 export { getServerSideProps } from '/lib/auth';

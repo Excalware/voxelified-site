@@ -65,17 +65,15 @@ export default async function handler(request, response) {
             error: true
         });
 
-    const code = uuid.v5(userId.toString(), user.id);
     if(data.length === 0) {
+        const code = uuid.v5(userId.toString(), user.id);
         const { data: data2, error: error3 } = await supabase
         .from('verificationUsers')
-        .insert([
-            {
-                userId,
-                code,
-                uid: user.id
-            }
-        ]);
+        .insert([{
+            userId,
+            code,
+            uid: user.id
+        }]);
         if(error3)
             return response.status(500).json({
                 state: 'supabase_error',
@@ -92,7 +90,7 @@ export default async function handler(request, response) {
 
     return response.status(200).json({
         state: "already_connected",
-        code,
+        code: data[0].code,
         data: data[0],
         error: false
     });
